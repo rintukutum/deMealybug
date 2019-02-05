@@ -24,13 +24,17 @@ top_model.y <- limma::topTable(
   number = nrow(fpkm.expr),
   adjust.method = 'BH'
 )
-mstrg.geneIdx <- geneIDs(bg_dr)
+## add the comparison
 top_model.y$comp <- paste0(rev(levels(p.df$sex)),collapse = '/')
+## Get gene ID information
+mstrg.geneIdx <- geneIDs(bg_dr)
 top_model.y$geneIDs <- mstrg.geneIdx[rownames(top_model.y)]
+##
+## compute q-value 
 top_model.y$qvalue <- qvalue::qvalue(p=top_model.y$P.Value)$qvalues
 dir.create('./data',showWarnings = FALSE)
 write.csv(
   top_model.y,
-  './data/limma-result.csv',
+  './data/deMealybug-limma-output.csv',
   row.names = FALSE
 )
