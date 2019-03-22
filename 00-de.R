@@ -28,7 +28,9 @@ top_model.y <- limma::topTable(
 top_model.y$comp <- paste0(rev(levels(p.df$sex)),collapse = '/')
 ## Get gene ID information
 mstrg.geneIdx <- geneIDs(bg_dr)
+transNames <- transcriptNames(bg_dr)
 top_model.y$geneIDs <- mstrg.geneIdx[rownames(top_model.y)]
+top_model.y$transcriptNames <- transNames[rownames(top_model.y)]
 ##
 ## compute q-value 
 top_model.y$qvalue <- qvalue::qvalue(p=top_model.y$P.Value)$qvalues
